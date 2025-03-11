@@ -1,0 +1,16 @@
+<template>
+    <lightning-card title="Imperative Apex Call" >
+        <div>
+            <p>{message}</p>
+        </div>
+        <div>
+            <lightning-button label="click" onclick={handleClick}></lightning-button>
+        </div>
+        <div>
+        <lightning-input label="Name" value={name} onchange={handleInputChange}></lightning-input>
+        <lightning-input label="AnnualRevenue" value={revenue} onchange={handleInputChange}></lightning-input>
+
+        <lightning-button label="create Account" onclick={handleCreate} ></lightning-button>
+        </div>
+    </lightning-card>
+</template>

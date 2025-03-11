@@ -1,0 +1,41 @@
+import { LightningElement, track } from 'lwc';
+
+import greet from '@salesforce/apex/SalesforceData.greet';
+import Method2 from '@salesforce/apex/SalesforceData.Method2';
+export default class ImperativeSalesforceData extends LightningElement {
+
+    @track message;
+    @track name;
+    @track revenue;
+    handleClick(){
+        //this.message = 'Hi';
+        greet({name : 'to Kalyan'})
+        .then(rData => {
+            this.message = rData;
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }
+    handleInputChange(event){
+        if(event.target.label == 'Name'){
+            this.name = event.target.value;
+        }
+        if(event.target.label == 'AnnualRevenue'){
+            this.revenue = event.target.value;
+        }
+
+    }
+    handleCreate(){
+        Method2({accName: this.name, accRevenue : parseFloat(this.revenue)})
+        .then(rData => {
+            console.log(rData);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
+    }
+
+
+}

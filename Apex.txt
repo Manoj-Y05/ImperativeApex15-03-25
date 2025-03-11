@@ -1,0 +1,52 @@
+public with sharing class SalesforceData {
+    public static void Method1(){
+        List<String> stdNames = new List<String>();
+        stdNames.add('Manoj');
+        stdNames.add('bhargav');
+        stdNames.add('jitendar');
+        System.debug(stdNames);
+        
+        Map<String, Integer> studentInfo = new Map<String, Integer>();
+            studentInfo.put('Manoj', 1);
+        	studentInfo.put('bhargav', 2);
+        	studentInfo.put('jitendar', 3);
+        	System.debug(studentInfo);
+        
+    }
+    @AuraEnabled
+    public static String Method2(String accName, Decimal accRevenue){
+        List<Account> allccs = new List<Account>();
+        try{
+            Account acc2 = new Account();
+        	acc2.Name = accName;
+        	acc2.AnnualRevenue = accRevenue;
+            allccs.add(acc2);
+            insert allccs;
+            return acc2.Name;
+        }
+        catch(DmlException dex){
+           throw new AuraHandledException('unexpected error' + dex.getMessage());
+        }
+        catch(Exception ex){
+            throw new AuraHandledException('unexpected error' + ex.getMessage());
+        }
+    }
+    public static void Method3(){
+        Account fetchedAcc1 = [SELECT Name, AnnualRevenue FROM Account WHERE Name = 'Samsung' LIMIT 1];
+        fetchedAcc1.AnnualRevenue = 10000000;
+        update fetchedAcc1;
+        
+       Account fetchedAcc2 = [SELECT Name FROM Account WHERE Name = 'Google' LIMIT 1];
+        //delete fetchedAcc2;
+        
+        System.debug(fetchedAcc1);
+        System.debug(fetchedAcc2);
+    }
+    @AuraEnabled(cacheable=true)
+    public static String greet(String name){
+        
+        return 'Hi Im from Apex ' + name;
+      
+    }
+    
+}
